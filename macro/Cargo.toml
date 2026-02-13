@@ -4,10 +4,10 @@ version = "0.19.0"
 edition.workspace = true
 description = "Internal macros for Melior"
 documentation = "https://mlir-rs.github.io/melior/melior/"
-readme.workspace = true
-repository.workspace = true
-license.workspace = true
-keywords.workspace = true
+# readme.workspace = true
+# repository.workspace = true
+# license.workspace = true
+# keywords.workspace = true
 
 [lib]
 proc-macro = true
@@ -19,12 +19,13 @@ proc-macro2 = "1"
 quote = "1"
 regex = "1.12.3"
 syn = { version = "2", features = ["full"] }
-tblgen = { version = "0.7.2", default-features = false, features = [
-  "llvm21-0",
-] }
+tblgen = { path = "../../tblgen-rs", default-features = false, features = [ "llvm22-0" ] }
 unindent = "0.2.4"
 
 [dev-dependencies]
 melior = { path = "../melior", features = ["ods-dialects"] }
-mlir-sys = "210.0.1"
+mlir-sys = { path = "../../mlir-sys" }
 pretty_assertions = "1.4.1"
+
+[build-dependencies]
+cargo_metadata = "0.23.1"

@@ -1,30 +1,29 @@
-use std::{env, error::Error, path::Path, process::Command, str};
-
-const LLVM_MAJOR_VERSION: usize = 21;
+use cargo_metadata::MetadataCommand;
+use std::{
+    error::Error,
+    path::{Path, PathBuf},
+    process::Command,
+    str,
+};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let version_variable = format!("MLIR_SYS_{LLVM_MAJOR_VERSION}0_PREFIX");
+    let metadata = MetadataCommand::new().exec().unwrap();
+    let target_dir: PathBuf = metadata.target_directory.into();
+    let bin_dir: PathBuf = target_dir.join("install/bin");
 
-    println!("cargo:rerun-if-env-changed={version_variable}");
     println!(
         "cargo:rustc-env=LLVM_INCLUDE_DIRECTORY={}",
         // spell-checker: disable-next-line
-        llvm_config("--includedir", &version_variable)?
+        llvm_config(bin_dir.as_path(), "--includedir")?
     );
 
     Ok(())
 }
 
-fn llvm_config(
-    argument: &str,
-    version_variable: &str,
-) -> Result<String, Box<dyn std::error::Error>> {
-    let prefix = env::var(version_variable)
-        .map(|path| Path::new(&path).join("bin"))
-        .unwrap_or_default();
+fn llvm_config(bin_dir: &Path, argument: &str) -> Result<String, Box<dyn std::error::Error>> {
     let call = format!(
         "{} --link-static {}",
-        prefix.join("llvm-config").display(),
+        bin_dir.join("llvm-config").display(),
         argument
     );
 
