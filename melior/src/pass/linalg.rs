@@ -14,7 +14,6 @@ melior_macro::passes!(
         mlirCreateLinalgLinalgFoldUnitExtentDimsPass,
         mlirCreateLinalgLinalgGeneralizeNamedOpsPass,
         mlirCreateLinalgLinalgInlineScalarOperandsPass,
-        mlirCreateLinalgLinalgNamedOpConversionPass,
         mlirCreateLinalgLinalgSpecializeGenericOpsPass,
     ]
 );

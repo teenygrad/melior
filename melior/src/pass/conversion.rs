@@ -37,7 +37,6 @@ melior_macro::conversion_passes!(
     mlirCreateConversionConvertMathToSPIRVPass,
     mlirCreateConversionConvertMemRefToEmitC,
     mlirCreateConversionConvertMemRefToSPIRVPass,
-    mlirCreateConversionConvertMeshToMPIPass,
     mlirCreateConversionConvertNVGPUToNVVMPass,
     mlirCreateConversionConvertNVVMToLLVMPass,
     mlirCreateConversionConvertOpenACCToSCFPass,

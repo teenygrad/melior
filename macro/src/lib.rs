@@ -94,6 +94,8 @@ fn convert_result(result: Result<TokenStream, Box<dyn Error>>) -> TokenStream {
     result.unwrap_or_else(|error| {
         let message = error.to_string();
 
-        quote! { compile_error!(#message) }.into()
+        // Semicolon required: macros that expand to items with () must be followed by
+        // `;`
+        quote! { compile_error!(#message); }.into()
     })
 }
