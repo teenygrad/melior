@@ -1,9 +1,9 @@
-// spell-checker: disable
 //! Linalg passes.
 
 melior_macro::passes!(
     "Linalg",
     [
+        // spell-checker: disable-next-line
         mlirCreateLinalgConvertElementwiseToLinalgPass,
         mlirCreateLinalgConvertLinalgToAffineLoopsPass,
         mlirCreateLinalgConvertLinalgToLoopsPass,
@@ -11,12 +11,9 @@ melior_macro::passes!(
         mlirCreateLinalgLinalgBlockPackMatmul,
         mlirCreateLinalgLinalgDetensorizePass,
         mlirCreateLinalgLinalgElementwiseOpFusionPass,
-        mlirCreateLinalgLinalgFoldIntoElementwisePass,
         mlirCreateLinalgLinalgFoldUnitExtentDimsPass,
         mlirCreateLinalgLinalgGeneralizeNamedOpsPass,
         mlirCreateLinalgLinalgInlineScalarOperandsPass,
-        mlirCreateLinalgLinalgMorphOpsPass,
         mlirCreateLinalgLinalgSpecializeGenericOpsPass,
-        mlirCreateLinalgSimplifyDepthwiseConvPass,
     ]
 );

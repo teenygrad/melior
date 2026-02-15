@@ -30,3 +30,4 @@ trybuild = { version = "1.0.108", features = ["diff"] }
 
 [build-dependencies]
 cargo_metadata = "0.23.1"
+rustc_llvm = { path = "../../../compiler/rustc_llvm" }
