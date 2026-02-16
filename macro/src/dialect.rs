@@ -32,6 +32,15 @@ pub fn generate_dialect(input: DialectInput) -> Result<TokenStream, Box<dyn std:
     parser = parser.add_include_directory(LLVM_INCLUDE_DIRECTORY);
 
     for path in input.directories() {
+        let path_str = path.to_string();
+
+        // environment variables are in uppercase
+        if path_str.to_uppercase() == path_str {
+            let path = std::env::var(path_str).unwrap();
+            parser = parser.add_include_directory(path.as_str());
+            continue;
+        }
+
         let path = if matches!(
             Path::new(path).components().next(),
             Some(Component::CurDir | Component::ParentDir)
@@ -85,8 +94,7 @@ fn generate_dialect_module(
         sanitize_documentation(dialect.str_value("description").unwrap_or(""),)?
     );
     let name = sanitize_snake_case_identifier(name)?;
-
-    Ok(quote! {
+    let quoted_mod = quote! {
         #[doc = #doc]
         pub mod #name {
             use melior::ir::operation::OperationLike;
@@ -94,7 +102,9 @@ fn generate_dialect_module(
 
             #(#operations)*
         }
-    })
+    };
+
+    Ok(quoted_mod)
 }
 
 fn create_syn_error(error: impl Display) -> syn::Error {

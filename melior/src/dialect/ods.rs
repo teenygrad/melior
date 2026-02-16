@@ -192,10 +192,10 @@ melior_macro::dialect! {
     files: ["mlir/Dialect/Vector/IR/VectorOps.td"],
 }
 
-// melior_macro::dialect! {
-//     name: "x86vector",
-//     files: ["mlir/Dialect/X86Vector/X86Vector.td"],
-// }
+melior_macro::dialect! {
+    name: "x86vector",
+    files: ["mlir/Dialect/X86Vector/X86Vector.td"],
+}
 
 #[cfg(test)]
 mod tests {
