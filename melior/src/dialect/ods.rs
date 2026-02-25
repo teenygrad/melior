@@ -195,6 +195,11 @@ melior_macro::dialect! {
     files: ["mlir/Dialect/X86Vector/X86Vector.td"],
 }
 
+melior_macro::dialect! {
+    name: "ub",
+    files: ["mlir/Dialect/UB/IR/UBOps.td"],
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
