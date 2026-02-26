@@ -98,7 +98,7 @@ pub fn switch<'c>(
             (
                 Identifier::new(context, "case_values"),
                 DenseElementsAttribute::new(
-                    RankedTensorType::new(&[case_values.len() as u64], flag_type, None).into(),
+                    RankedTensorType::new(&[case_values.len() as i64], flag_type, None).into(),
                     &case_values
                         .iter()
                         .map(|value| IntegerAttribute::new(flag_type, *value).into())

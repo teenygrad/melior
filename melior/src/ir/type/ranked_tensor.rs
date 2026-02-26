@@ -16,7 +16,7 @@ pub struct RankedTensorType<'c> {
 
 impl<'c> RankedTensorType<'c> {
     /// Creates a ranked tensor type.
-    pub fn new(dimensions: &[u64], r#type: Type<'c>, encoding: Option<Attribute<'c>>) -> Self {
+    pub fn new(dimensions: &[i64], r#type: Type<'c>, encoding: Option<Attribute<'c>>) -> Self {
         unsafe {
             Self::from_raw(mlirRankedTensorTypeGet(
                 dimensions.len() as _,
