@@ -13,15 +13,20 @@ pub trait ShapedTypeLike<'c>: TypeLike<'c> {
         unsafe { Type::from_raw(mlirShapedTypeGetElementType(self.to_raw())) }
     }
 
+    /// Returns the dimensions
+    fn dims(&self) -> Result<Vec<i64>, Error> {
+        (0..self.rank()).map(|i| self.dim_size(i)).collect()
+    }
+
     /// Returns a rank.
     fn rank(&self) -> usize {
         (unsafe { mlirShapedTypeGetRank(self.to_raw()) }) as usize
     }
 
     /// Returns a dimension size.
-    fn dim_size(&self, index: usize) -> Result<usize, Error> {
+    fn dim_size(&self, index: usize) -> Result<i64, Error> {
         if index < self.rank() {
-            Ok((unsafe { mlirShapedTypeGetDimSize(self.to_raw(), index as isize) }) as usize)
+            Ok(unsafe { mlirShapedTypeGetDimSize(self.to_raw(), index as isize) })
         } else {
             Err(Error::PositionOutOfBounds {
                 name: "dimension size",

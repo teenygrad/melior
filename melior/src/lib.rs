@@ -7,7 +7,7 @@ mod r#macro;
 mod context;
 pub mod diagnostic;
 pub mod dialect;
-mod error;
+pub mod error;
 mod execution_engine;
 #[cfg(feature = "helpers")]
 pub mod helpers;
