@@ -24,6 +24,16 @@ pub trait ShapedTypeLike<'c>: TypeLike<'c> {
         unsafe { Type::from_raw(mlirShapedTypeGetElementType(self.to_raw())) }
     }
 
+    /// Returns the dimensions as raw sizes.
+    ///
+    /// Dynamic dimensions are returned as their raw sentinel values. Use
+    /// [`Self::dim_size`] to tell static and dynamic dimensions apart.
+    fn dims(&self) -> Result<Vec<i64>, Error> {
+        (0..self.rank())
+            .map(|index| Ok(unsafe { mlirShapedTypeGetDimSize(self.to_raw(), index as isize) }))
+            .collect()
+    }
+
     /// Returns a rank.
     fn rank(&self) -> usize {
         (unsafe { mlirShapedTypeGetRank(self.to_raw()) }) as usize
