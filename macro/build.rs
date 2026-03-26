@@ -7,9 +7,20 @@ use std::{
 };
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let metadata = MetadataCommand::new().exec().unwrap();
-    let target_dir: PathBuf = metadata.target_directory.into();
-    let bin_dir: PathBuf = target_dir.join("install/bin");
+    // When building with x.py, LLVM_CONFIG is set by bootstrap and points to the build-dir
+    // llvm-config. For melior we need the install dir (which has mlir-c headers).
+    // Derive it from CARGO_MANIFEST_DIR (src/melior/macro -> workspace_root -> target/install).
+    // Otherwise fall back to cargo_metadata-based discovery.
+    let bin_dir: PathBuf = if std::env::var("LLVM_CONFIG").is_ok() {
+        let manifest_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let workspace_root =
+            manifest_dir.parent().unwrap().parent().unwrap().parent().unwrap();
+        workspace_root.join("target/install/bin")
+    } else {
+        let metadata = MetadataCommand::new().exec().unwrap();
+        let target_dir: PathBuf = metadata.target_directory.into();
+        target_dir.join("install/bin")
+    };
 
     println!(
         "cargo:rustc-env=LLVM_INCLUDE_DIRECTORY={}",
