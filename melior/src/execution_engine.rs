@@ -30,6 +30,7 @@ impl ExecutionEngine {
                         .collect::<Vec<_>>()
                         .as_ptr(),
                     enable_object_dump,
+                    true,
                 )
             },
         }
