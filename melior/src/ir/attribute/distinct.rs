@@ -1,5 +1,5 @@
 use super::Attribute;
-use mlir_sys::{MlirAttribute, mlirDisctinctAttrCreate};
+use mlir_sys::{MlirAttribute, mlirDistinctAttrCreate};
 
 /// A disctinct attribute.
 #[derive(Clone, Copy, Hash)]
@@ -10,7 +10,7 @@ pub struct DisctinctAttribute<'c> {
 impl<'c> DisctinctAttribute<'c> {
     /// Creates a disctinct attribute.
     pub fn new(referenced_attr: &Attribute<'c>) -> Self {
-        unsafe { Self::from_raw(mlirDisctinctAttrCreate(referenced_attr.raw)) }
+        unsafe { Self::from_raw(mlirDistinctAttrCreate(referenced_attr.raw)) }
     }
 }
 

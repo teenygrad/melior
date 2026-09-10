@@ -493,22 +493,22 @@ mod tests {
         test::create_test_context,
     };
 
-    fn i32_tensor_type<'c>(context: &'c crate::Context, len: u64) -> Type<'c> {
+    fn i32_tensor_type<'c>(context: &'c crate::Context, len: i64) -> Type<'c> {
         let element = IntegerType::new(context, 32).into();
         RankedTensorType::new(&[len], element, None).into()
     }
 
-    fn i64_tensor_type<'c>(context: &'c crate::Context, len: u64) -> Type<'c> {
+    fn i64_tensor_type<'c>(context: &'c crate::Context, len: i64) -> Type<'c> {
         let element = IntegerType::new(context, 64).into();
         RankedTensorType::new(&[len], element, None).into()
     }
 
-    fn f32_tensor_type<'c>(context: &'c crate::Context, len: u64) -> Type<'c> {
+    fn f32_tensor_type<'c>(context: &'c crate::Context, len: i64) -> Type<'c> {
         let element = Type::float32(context);
         RankedTensorType::new(&[len], element, None).into()
     }
 
-    fn f64_tensor_type<'c>(context: &'c crate::Context, len: u64) -> Type<'c> {
+    fn f64_tensor_type<'c>(context: &'c crate::Context, len: i64) -> Type<'c> {
         let element = Type::float64(context);
         RankedTensorType::new(&[len], element, None).into()
     }
